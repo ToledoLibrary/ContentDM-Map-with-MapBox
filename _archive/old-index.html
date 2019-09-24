@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'link', 'Hours per Day'],
+          ['Work', 'http://www.thefreedictionary.com/work', 11],
+          ['Eat', 'http://www.thefreedictionary.com/eat', 2],
+          ['Commute', 'http://www.thefreedictionary.com/commute', 2],
+          ['Watch TV', 'http://www.thefreedictionary.com/television',2],
+          ['Sleep',  'http://www.thefreedictionary.com/sleep', 7]
+        ]);
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 2]);
+
+        var options = {
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.ColumnChart( 
+          document.getElementById('chart_div'));
+        chart.draw(view, options);
+
+        var selectHandler = function(e) {
+         window.location = data.getValue(chart.getSelection()[0]['row'], 1 );
+        }
+
+        // Add our selection handler.
+        google.visualization.events.addListener(chart, 'select', selectHandler);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 900px; height: 900px;"></div>
+  </body>
+</html>
